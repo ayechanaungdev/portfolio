@@ -133,9 +133,11 @@
             <li><b>Age:</b> 27</li>
             <li><b>Gender:</b> Male</li>
           </ul>
-          <button class="btn btn-theme-outline">
+          <!-- <button class="btn btn-theme-outline">
             <a href="storage/cv-ayechanaung.pdf" download="cv-ayechanaung.pdf">Download CV</a>
-          </button>
+          </button> -->
+          <button class="btn btn-theme-outline" id="downloadButton" onClick="downloadCV()">Download CV</button>
+          <span id="downloadMessage" style="display: none;">Downloading...</span>
         </div>
       </div>
     </div>
@@ -695,5 +697,24 @@
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script>
   
+  <!-- my scripts -->
+  <script>
+    function downloadCV() {
+      var cvUrl = "/storage/cv-ayechanaung.pdf";
+
+      var downloadLink = document.createElement("a");
+      downloadLink.style.display = "none";
+      downloadLink.href = cvUrl;
+      downloadLink.download = "cv-ayechanaung.pdf";
+
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
+      // Show the download message when the download starts.
+      document.getElementById("downloadMessage").style.display = "inline";
+    }
+
+  </script>
 </body>
 </html>
