@@ -137,7 +137,7 @@
             <a href="storage/cv-ayechanaung.pdf" download="cv-ayechanaung.pdf">Download CV</a>
           </button> -->
           <button class="btn btn-theme-outline" id="downloadButton" onClick="downloadCV()">Download CV</button>
-          <span id="downloadMessage" style="display: none;">Downloading...</span>
+          <p id="downloadMessage" style="display: none;">Downloading...</p>
         </div>
       </div>
     </div>
@@ -700,7 +700,7 @@
   <!-- my scripts -->
   <script>
     function downloadCV() {
-      var cvUrl = "/storage/cv-ayechanaung.pdf";
+      var cvUrl = "storage/cv-ayechanaung.pdf";
 
       var downloadLink = document.createElement("a");
       downloadLink.style.display = "none";
