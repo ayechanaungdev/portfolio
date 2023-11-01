@@ -136,8 +136,8 @@
           <!-- <button class="btn btn-theme-outline">
             <a href="storage/cv-ayechanaung.pdf" download="cv-ayechanaung.pdf">Download CV</a>
           </button> -->
-          <div id="downloadNotification" style="display: none; background-color: #007BFF; color: white; padding: 10px; text-align: center; position: fixed; top: 0; left: 0; width: 100%;"></div>
           <button class="btn btn-theme-outline" id="downloadButton" onClick="downloadCV()">Download CV</button>
+          <p id="downloadMessage" style="display: none;">Your download has started...</p>
         </div>
       </div>
     </div>
@@ -711,21 +711,15 @@
       downloadLink.click();
       document.body.removeChild(downloadLink);
 
-      // Show the download message at the top.
-      var downloadMessage = document.getElementById("downloadNotification");
-      downloadMessage.textContent = "Downloading CV...";
-      downloadMessage.style.display = "block";
+      // Show the download message when the download starts.
+      document.getElementById("downloadMessage").style.display = "block";
 
-      // Listen for the 'download' event to detect when a download ends.
-      window.addEventListener("download", function() {
-      downloadMessage.textContent = "Download complete!";
-      downloadMessage.style.backgroundColor = "green";
-
+      // Hide the message after a few seconds (e.g., 3 seconds).
+      
       //hide the message after 3 seconds or leave it visible.
       setTimeout(function() {
         downloadMessage.style.display = "none";
       }, 3000);
-     });
     }
 
   </script>
