@@ -19,7 +19,7 @@ exports.handler = async (event, context) => {
 
   const mailOptions = {
     from: email,
-    to: "ayechanaungdev@gmail.com",
+    to: "ayechanmsccs@gmail.com",
     subject: subject,
     text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage: ${message}`
   };
