@@ -18,10 +18,11 @@ exports.handler = async (event, context) => {
   });
 
   const mailOptions = {
-    from: email,
-    to: "ayechanmsccs@gmail.com",
+    from: 'ayechanaungdev@gmail.com', // system's registered mail
+    to: "ayechanaungdev@gmail.com", // recipent mail
     subject: subject,
-    text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage: ${message}`
+    text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage: ${message}`,
+    replyTo: email // client's filled email
   };
 
   // Send the email
