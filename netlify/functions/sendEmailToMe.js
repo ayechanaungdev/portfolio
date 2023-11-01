@@ -2,6 +2,11 @@
 const nodemailer = require("nodemailer");
 
 exports.handler = async (event, context) => {
+
+  if (!event.body) {
+    throw new Error("Empty request body");
+  }
+  
   const data = JSON.parse(event.body);
 
   // Extract data from the request
