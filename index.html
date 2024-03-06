@@ -76,7 +76,7 @@
     <!-- Navbar -->
     <div class="navbar navbar-expand-lg navbar-dark sticky" data-offset="500">
       <div class="container">
-        <a href="" class="navbar-brand">V-Folio</a>
+        <a href="" class="navbar-brand">AYE CHAN AUNG</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#main-navbar" aria-expanded="true">
           <span class="ti-menu"></span>
         </button>
@@ -120,17 +120,21 @@
       <div class="row">
         <div class="col-lg-4 py-3">
           <div class="img-place wow fadeInUp">
-            <img src="assets/img/person.jpg" alt="">
+            <img src="assets/img/aca-portfolio-intro.png" alt="">
           </div>
         </div>
         <div class="col-lg-6 offset-lg-1 wow fadeInRight">
           <h1 class="fw-light">AYE CHAN AUNG</h1>
           <h5 class="fg-theme mb-3">Programmer / Web Developer</h5>
-          <p class="text-muted">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form but the majority have suffered alteration in some</p>
-          <ul class="theme-list">
+          <p class="text-muted">
+            <p>With a degree in Computer Science and a knack for software development, I bring expertise in both back-end and front-end technologies. Proficient in Java, C#, and PHP, I craft dynamic solutions using frameworks like Laravel.</p>
+            <p>I've tailored innovative projects for Japanese clients in insurance and product management. As an ICT Teacher, I empowered students with digital literacy skills.</p>
+            <p>Eager to make waves in software development through collaboration and innovation.</p>
+            
+            <ul class="theme-list">
             <li><b>From:</b> Yangon, Myanmar</li>
             <li><b>Lives In:</b> Yangon, Myanmar</li>
-            <li><b>Age:</b> 27</li>
+            <li id="ageItem"><b>Age:</b> <span id="ageValue"></span></li>
             <li><b>Gender:</b> Male</li>
           </ul>
           <!-- <button class="btn btn-theme-outline">
@@ -208,7 +212,11 @@
               <div class="details">
                 <h5>Computer Science</h5>
                 <small class="fg-theme">University of Computer Studies, Yangon (UCSY)</small>
-                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered</p>
+                <p>
+                  - Computer Science <br>
+                  - Web Development <br>
+                  - Software Engineering
+              </p>
               </div>
             </li>
             <li>
@@ -216,44 +224,56 @@
               <div class="details">
                 <h5>Educational Technology</h5>
                 <small class="fg-theme">Yangon University of Education (YUOE)</small>
-                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered</p>
+                <p>
+                  - Applying Information Technology in Education <br>
+                  - Developing Creative Teaching Methodologies <br>
+                  - Creating Teaching Aids with Information Technology
+                </p>
               </div>
             </li>
-            <li>
+            <!-- <li>
               <div class="title">2008</div>
               <div class="details">
                 <h5>Specialize of course</h5>
                 <small class="fg-theme">University of Study</small>
                 <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered</p>
               </div>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div class="col-md-6 wow fadeInRight" data-wow-delay="200ms">
           <h2 class="fw-normal">Experience</h2>
           <ul class="timeline mt-4 pr-md-5">
             <li>
-              <div class="title">2022 - Present</div>
+              <div class="title">2024 - Current</div>
               <div class="details">
-                <h5>Programmer</h5>
-                <small class="fg-theme">GIC Myanamr Co., Ltd.</small>
+                <h5>PHP Developer</h5>
+                <small class="fg-theme">Fignny Co.Ltd, Japan</small>
                 <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered</p>
               </div>
+            </li>
+            <li>
+              <div class="title">2022 - 2024</div>
+              <div class="details">
+                <h5>Programmer</h5>
+                <small class="fg-theme">GIC Myanamr Co., Ltd, Myanmar</small>
+                <p>As a Programmer/Web Developer, I spearheaded dynamic solutions for diverse projects, utilizing C# and PHP (Laravel). Notably, I led <strong>insurance</strong> and <strong>product management</strong> projects for Japanese clients, demonstrating a deep understanding of their unique requirements.
+                </div>
             </li>
             <li>
               <div class="title">2019 - 2021</div>
               <div class="details">
                 <h5>Multimedia Teacher</h5>
                 <small class="fg-theme">Ministry of Education, Myanmar</small>
-                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered</p>
-              </div>
-            </li>
-            <li>
-              <div class="title">2011</div>
-              <div class="details">
-                <h5>Specialize of course</h5>
-                <small class="fg-theme">University of Study</small>
-                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered</p>
+                <p class="mb-3">
+                  In my role as an ICT teacher, I focused on integrating technology into education. I crafted enriched lesson plans, developed teaching aids, and guided students in ICT utilization, fostering digital literacy.
+                </p>
+                <p>
+                  I focused on integrating technology into education by: <br>
+                  > Implementing technology in lesson plans <br>
+                  > Creating teaching aids using IT <br>
+                  > Teaching children the correct use of ICT
+                </p>
               </div>
             </li>
           </ul>
@@ -699,6 +719,8 @@
   
   <!-- my scripts -->
   <script>
+
+    // download CV
     function downloadCV() {
       var cvUrl = "storage/cv-ayechanaung.pdf";
 
@@ -748,9 +770,24 @@
     } catch (error) {
     // Handle network or other errors
     console.error("An error occurred: " + error);
-  }
-});
+    }
+  });
 
+  // Show age according to Birthdate
+    function showAgeFromBirthDate(birthDate) {
+    var dob = new Date(birthDate);
+    var currentDate = new Date();
+    var age = currentDate.getFullYear() - dob.getFullYear();
+    if (currentDate.getMonth() < dob.getMonth() || 
+        (currentDate.getMonth() === dob.getMonth() && currentDate.getDate() < dob.getDate())) {
+        age--;
+    }
+    var ageElement = document.getElementById('ageValue');
+    ageElement.textContent = age;
+  }
+
+  // Call the function with the birth date
+  showAgeFromBirthDate('1996-01-18');
 
   </script>
 </body>
