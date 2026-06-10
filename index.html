@@ -421,7 +421,11 @@
               </li>
             </ul>
           </div>
-          <div class="col-md-6 wow fadeInRight" data-wow-delay="200ms">
+          <div
+            class="col-md-6 wow fadeInRight"
+            data-wow-delay="200ms"
+            id="experience"
+          >
             <h2 class="fw-normal">Experience</h2>
             <ul class="timeline mt-4 pr-md-5">
               <li>
@@ -1150,6 +1154,105 @@
           console.error("An error occurred: " + error);
         }
       });
+
+      function parseMonthFromAbbrev(monthText) {
+        const month = monthText.trim().toLowerCase();
+        const map = {
+          jan: 0,
+          feb: 1,
+          mar: 2,
+          apr: 3,
+          may: 4,
+          jun: 5,
+          jul: 6,
+          aug: 7,
+          sep: 8,
+          sept: 8,
+          oct: 9,
+          nov: 10,
+          dec: 11,
+        };
+        return map[month] ?? null;
+      }
+
+      function calculateDurationText(startRange, endRange) {
+        const startParts = startRange.trim().split(" ");
+        const endParts = endRange.trim().split(" ");
+        if (startParts.length !== 2) {
+          return null;
+        }
+        const startMonth = parseMonthFromAbbrev(startParts[1]);
+        const startYear = parseInt(startParts[0], 10);
+        if (Number.isNaN(startMonth) || Number.isNaN(startYear)) {
+          return null;
+        }
+
+        let endDate;
+        if (endRange.toLowerCase() === "current") {
+          endDate = new Date();
+        } else if (endParts.length === 2) {
+          const endMonth = parseMonthFromAbbrev(endParts[1]);
+          const endYear = parseInt(endParts[0], 10);
+          if (Number.isNaN(endMonth) || Number.isNaN(endYear)) {
+            return null;
+          }
+          endDate = new Date(endYear, endMonth, 1);
+        } else {
+          return null;
+        }
+
+        const startDate = new Date(startYear, startMonth, 1);
+        let monthDiff =
+          endDate.getFullYear() * 12 +
+          endDate.getMonth() -
+          (startDate.getFullYear() * 12 + startDate.getMonth());
+        if (monthDiff < 0) {
+          monthDiff = 0;
+        }
+
+        const years = Math.floor(monthDiff / 12);
+        const months = monthDiff % 12;
+        const parts = [];
+        if (years > 0) {
+          parts.push(years + " year" + (years > 1 ? "s" : ""));
+        }
+        if (months > 0) {
+          parts.push(months + " month" + (months > 1 ? "s" : ""));
+        }
+        return parts.length ? parts.join(" ") : "0 months";
+      }
+
+      function insertExperienceDurationLabels() {
+        const experienceSection = document.getElementById("experience");
+        if (!experienceSection) {
+          return;
+        }
+        const titles = experienceSection.querySelectorAll(".timeline .title");
+        titles.forEach((title) => {
+          const text = title.textContent.trim();
+          const match = text.match(
+            /^(\d{4} \w{3,4})\s*-\s*(Current|\d{4} \w{3,4})$/i,
+          );
+          if (!match) {
+            return;
+          }
+          const durationText = calculateDurationText(match[1], match[2]);
+          if (!durationText) {
+            return;
+          }
+          const existingDuration = title.querySelector(".duration-label");
+          if (existingDuration) {
+            existingDuration.textContent = " (" + durationText + ")";
+            return;
+          }
+          const durationSpan = document.createElement("span");
+          durationSpan.className = "duration-label";
+          durationSpan.textContent = " (" + durationText + ")";
+          title.appendChild(durationSpan);
+        });
+      }
+
+      insertExperienceDurationLabels();
 
       // Show age according to Birthdate
       function showAgeFromBirthDate(birthDate) {
