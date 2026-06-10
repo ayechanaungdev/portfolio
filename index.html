@@ -429,7 +429,7 @@
             <h2 class="fw-normal">Experience</h2>
             <ul class="timeline mt-4 pr-md-5">
               <li>
-                <div class="title">2025 Oct - Current</div>
+                <div class="title">2025 Nov - Current</div>
                 <div class="details">
                   <h5>Senior Software Engineer</h5>
                   <small class="fg-theme">GIC Myanmar Co., Ltd, Myanmar</small>
@@ -450,7 +450,7 @@
                 </div>
               </li>
               <li>
-                <div class="title">2024 Apr - 2025 Sept</div>
+                <div class="title">2024 Apr - 2025 Oct</div>
                 <div class="details">
                   <h5>PHP Developer</h5>
                   <small class="fg-theme">Fignny Co.Ltd, Japan Based</small>
@@ -1212,43 +1212,54 @@
 
         const years = Math.floor(monthDiff / 12);
         const months = monthDiff % 12;
-        const parts = [];
+        if (years > 0 && months > 0) {
+          return (
+            years + ' yr <span class="duration-month">' + months + "m</span>"
+          );
+        }
         if (years > 0) {
-          parts.push(years + " year" + (years > 1 ? "s" : ""));
+          return years + " yr";
         }
         if (months > 0) {
-          parts.push(months + " month" + (months > 1 ? "s" : ""));
+          return '<span class="duration-month">' + months + "m</span>";
         }
-        return parts.length ? parts.join(" ") : "0 months";
+        return '<span class="duration-month">0m</span>';
       }
 
       function insertExperienceDurationLabels() {
-        const experienceSection = document.getElementById("experience");
-        if (!experienceSection) {
-          return;
-        }
-        const titles = experienceSection.querySelectorAll(".timeline .title");
+        const titles = document.querySelectorAll(".timeline .title");
         titles.forEach((title) => {
-          const text = title.textContent.trim();
-          const match = text.match(
+          const originalText = title.textContent.trim();
+          const rangeMatch = originalText.match(
             /^(\d{4} \w{3,4})\s*-\s*(Current|\d{4} \w{3,4})$/i,
           );
-          if (!match) {
+          if (rangeMatch) {
+            const durationText = calculateDurationText(
+              rangeMatch[1],
+              rangeMatch[2],
+            );
+            if (!durationText) {
+              return;
+            }
+            const dateHtml = rangeMatch[0].replace(
+              /(\d{4})/g,
+              '<span class="date-year">$1</span>',
+            );
+            title.innerHTML =
+              dateHtml +
+              '<span class="duration-label"> (' +
+              durationText +
+              ")</span>";
             return;
           }
-          const durationText = calculateDurationText(match[1], match[2]);
-          if (!durationText) {
-            return;
+
+          const singleDateMatch = originalText.match(/^(\d{4})\s+(\w{3,4})$/i);
+          if (singleDateMatch) {
+            title.innerHTML = originalText.replace(
+              /^(\d{4})/,
+              '<span class="date-year">$1</span>',
+            );
           }
-          const existingDuration = title.querySelector(".duration-label");
-          if (existingDuration) {
-            existingDuration.textContent = " (" + durationText + ")";
-            return;
-          }
-          const durationSpan = document.createElement("span");
-          durationSpan.className = "duration-label";
-          durationSpan.textContent = " (" + durationText + ")";
-          title.appendChild(durationSpan);
         });
       }
 

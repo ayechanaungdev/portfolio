@@ -534,6 +534,16 @@ a:active {
   margin-left: 0.55rem;
 }
 
+.date-year {
+  color: #ffdd57;
+  font-weight: 600;
+  margin-right: 0.25rem;
+}
+
+.duration-month {
+  color: #ffffff;
+}
+
 .timeline .title .duration-label::before {
   content: "•";
   margin-right: 0.35rem;
